@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>孩子作业完成记录</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/leancloud-storage@4.15.0/dist/av-min.js"></script>
+</head>
+<body>
+    <!-- PIN码设置对话框 -->
+    <div id="pin-setup-modal" class="modal">
+        <div class="modal-content">
+            <h2>首次使用 - 设置PIN码</h2>
+            <p>请设置一个4位数字PIN码，用于保护数据修改权限</p>
+            <input type="password" id="pin-setup-input" maxlength="4" pattern="[0-9]*" inputmode="numeric" placeholder="请输入4位数字">
+            <button onclick="setupPin()">确定</button>
+        </div>
+    </div>
+
+    <!-- PIN码验证对话框 -->
+    <div id="pin-verify-modal" class="modal">
+        <div class="modal-content">
+            <h2>验证PIN码</h2>
+            <p>请输入PIN码以修改数据</p>
+            <input type="password" id="pin-verify-input" maxlength="4" pattern="[0-9]*" inputmode="numeric" placeholder="请输入PIN码">
+            <button onclick="verifyPin()">验证</button>
+            <button onclick="closeVerifyModal()" class="secondary">取消</button>
+        </div>
+    </div>
+
+    <!-- 添加PIN码修改对话框 -->
+    <div id="pin-change-modal" class="modal">
+        <div class="modal-content">
+            <h2>修改PIN码</h2>
+            <p>请先输入当前PIN码</p>
+            <input type="password" id="current-pin-input" maxlength="4" pattern="[0-9]*" inputmode="numeric" placeholder="当前PIN码">
+            <p>请输入新的PIN码</p>
+            <input type="password" id="new-pin-input" maxlength="4" pattern="[0-9]*" inputmode="numeric" placeholder="新的PIN码">
+            <p>请再次输入新的PIN码</p>
+            <input type="password" id="confirm-pin-input" maxlength="4" pattern="[0-9]*" inputmode="numeric" placeholder="确认新PIN码">
+            <div class="button-group">
+                <button onclick="changePin()">确认修改</button>
+                <button onclick="closeChangeModal()" class="secondary">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>作业完成记录表</h1>
+        <div class="homework-tracker">
+            <div class="view-buttons">
+                <button onclick="switchView('week')" class="view-btn active" id="week-btn">周视图</button>
+                <button onclick="switchView('month')" class="view-btn" id="month-btn">月视图</button>
+                <button onclick="switchView('year')" class="view-btn" id="year-btn">年视图</button>
+            </div>
+            <div class="nav-buttons">
+                <button onclick="showPrevious()">上一个</button>
+                <button onclick="showCurrent()">返回当前</button>
+                <button onclick="showNext()">下一个</button>
+            </div>
+            <div id="current-period"></div>
+            <div id="calendar-view"></div>
+            <div class="statistics">
+                <h3>统计信息</h3>
+                <p>总完成率：<span id="completion-rate">0%</span></p>
+                <button onclick="exportData()">导出数据</button>
+                <button onclick="clearOldData()" class="danger">清理旧数据</button>
+                <button onclick="showChangePinModal()" class="secondary">修改PIN码</button>
+            </div>
+        </div>
+    </div>
+    <script src="leancloud-config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html> 
